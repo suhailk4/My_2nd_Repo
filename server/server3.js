@@ -14,55 +14,56 @@ app.use(bodyparser.json());
 
 
 
-//
-// app.post('/todos',(req,res)=>{
-//
-//    var todo=new Todo({
-//
-//      text: req.body.text
-//    });
-//
-//    todo.save().then((docs)=>{
-//
-//
-//    res.send(docs);
-//
-//  },(err)=>{
-//
-//
-//     res.status(400).send(err);
-//  });
-//
-//      console.log(req.body);
-//
-// });
+
+app.post('/todos',(req,res)=>{
+
+   var todo=new Todo({
+
+     text: req.body.text
+   });
+
+   todo.save().then((docs)=>{
 
 
-
-app.post('/user',(req,res)=>{
-
-        var user=new users({
-
-              name: req.body.name,
-              email: req.body.email
+   res.send(docs);
 
 
-        });
-
-        user.save().then((doc)=>{
+ },(err)=>{
 
 
-          res.send(doc);
-        },(err)=>{
+    res.status(400).send(err);
+ });
 
-
-        res.status(400).send();
-        });
-
-
-
+     console.log(req.body);
 
 });
+
+
+//
+// app.post('/user',(req,res)=>{
+//
+//         var user=new users({
+//
+//               name: req.body.name,
+//               email: req.body.email
+//
+//
+//         });
+//
+//         user.save().then((doc)=>{
+//
+//
+//           res.send(doc);
+//         },(err)=>{
+//
+//
+//         res.status(400).send();
+//         });
+//
+//
+//
+//
+// });
 
 
 
@@ -75,3 +76,10 @@ app.listen(3000,()=>{
  console.log('Server is running on Port 3000');
 
 });
+
+
+
+module.exports={
+
+  app
+};
