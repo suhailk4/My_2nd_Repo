@@ -6,9 +6,14 @@ var {Todo}=require("./models/todo.js");
 
 var {users}=require('./models/user.js');
 
+const {ObjectID} =require('mongodb');
+
+
 const express=require('express');
 
 var app=express();
+
+const port=process.env.PORT|| 3000;
 
 app.use(bodyparser.json());
 
@@ -91,10 +96,43 @@ app.get('/todos',(req,res)=>{
 
 
 
+app.get('/todos/:id',(req,res)=>{
 
-app.listen(3000,()=>{
+  var id=req.params.id;
 
- console.log('Server is running on Port 3000');
+          if(!ObjectID.isValid(id))
+          {
+
+            return res.status(404).send();
+          }
+
+          Todo.findById(id).then((todo)=>{
+
+                     if(!todo)
+                     {
+                       return res.status(404).send();
+                     }
+
+
+                     res.send({todo});
+
+
+
+          }).catch((e)=>{
+
+             res.status(400).send();
+          });
+
+
+
+
+
+});
+
+
+app.listen(port,()=>{
+
+ console.log(`Server is running on Port ${port}`);
 
 });
 

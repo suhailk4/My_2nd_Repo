@@ -6,12 +6,16 @@ const {app}=require('./../server3.js');
 
 const {Todo}=require('./../models/todo.js');
 
+const {ObjectID}=require('mongodb');
+
 const todos=[{
+_id :new ObjectID(),
 text:"First Todo Text"
 
 
-},{
-
+},
+{
+  _id :new ObjectID(),
   text:"Second Todo Text"
 
 }];
@@ -138,12 +142,57 @@ describe('Post /todos',()=>{
   });
 
 
-
-
-
-
-
-
-
-
  });
+
+
+describe('Get/todos/:id',()=>{
+
+
+     it('Should test get todos if id found',(done)=>{
+
+
+
+
+          request(app)
+          .get(`/todos/${todos[0]._id.toHexString()}`)
+          .expect(200)
+          .expect((res)=>{
+
+
+            expect(res.body.todo.text).toBe(todos[0].text);
+          })
+
+          .end(done);
+
+
+
+     });
+
+     it('should test get todos if  valid object id but not found',(done)=>{
+
+
+        var id2=new ObjectID().toHexString();
+           request(app)
+           .get('/todos/id')
+           .expect(404)
+           .end(done);
+
+
+     });
+
+
+
+
+     it('should test get todos if  Invalid object id',(done)=>{
+
+
+
+           request(app)
+           .get('/todos/abc334')
+           .expect(404)
+           .end(done);
+
+
+     });
+
+});
