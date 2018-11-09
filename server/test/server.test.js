@@ -196,3 +196,77 @@ describe('Get/todos/:id',()=>{
      });
 
 });
+
+
+
+
+describe('Get Todos /Delete',()=>{
+
+  var hexid=todos[1]._id.toHexString();
+ it('Should delete Todo data',(done)=>{
+
+
+      request(app)
+      .delete(`/todos/${hexid}`)
+      .expect(200)
+      .expect((res)=>{
+
+         expect(res.body.todo._id).toBe(hexid);
+       })
+    .end((err,res)=>{
+
+             if(err)
+             {
+              return done(err);
+             }
+             Todo.findById(hexid).then((todo)=>{
+
+            expect(todo).toNotExist();
+            done();
+
+
+          }).catch((e)=>{
+            done(e);
+          });
+
+      });
+
+
+    });
+
+
+  it('Should Check If Id Doesnt exist',(done)=>{
+
+              request(app)
+              .delete(`/delete/todos/${hexid}`)
+              .expect(404)
+              .end(done);
+
+
+
+
+
+
+  });
+
+
+
+
+
+    it('Should Check If Id is InValid ',(done)=>{
+
+                request(app)
+                .delete('/delete/todos/12388')
+                .expect(404)
+                .end(done);
+
+
+
+
+
+
+    });
+
+
+
+ });
