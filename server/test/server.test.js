@@ -135,14 +135,10 @@ describe('Post /todos',()=>{
 
 
 
-
-
-
-
   });
 
 
- });
+});
 
 
 describe('Get/todos/:id',()=>{
@@ -242,15 +238,7 @@ describe('Get Todos /Delete',()=>{
               .expect(404)
               .end(done);
 
-
-
-
-
-
   });
-
-
-
 
 
     it('Should Check If Id is InValid ',(done)=>{
@@ -261,12 +249,7 @@ describe('Get Todos /Delete',()=>{
                 .end(done);
 
 
-
-
-
-
     });
-
 
 
  });
