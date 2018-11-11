@@ -13,10 +13,13 @@ _id :new ObjectID(),
 text:"First Todo Text"
 
 
+
 },
 {
   _id :new ObjectID(),
-  text:"Second Todo Text"
+  text:"Second Todo Text",
+  completed:false,
+  completedAt:333
 
 }];
 
@@ -253,3 +256,76 @@ describe('Get Todos /Delete',()=>{
 
 
  });
+
+
+
+
+
+
+
+
+
+
+
+describe('Patch todos/:id',()=>{
+
+
+    it('should test if text is changed ',(done)=>{
+
+               var id=todos[0]._id.toHexString();
+               var text="Hello Text is changed -1";
+               request(app)
+               .patch(`/todos/${id}`)
+               .send({
+
+                 text:text,
+                 completed:true
+
+               })
+               .expect(200)
+               .expect((res)=>{
+                 expect(res.body.todo.text).toBe(text);
+                 expect(res.body.todo.completed).toBe(true);
+                 expect(res.body.todo.completedAt).toBeA('string')
+
+               })
+               .end(done);
+
+
+
+
+    });
+    it('should test 2nd todo text is changed, set completed to false and completed at Nully ',(done)=>{
+
+               var id=todos[1]._id.toHexString();
+               var text=" Text is changed -2";
+               request(app)
+               .patch(`/todos/${id}`)
+               .send({
+
+                 text:text,
+                 completed:false,
+                 completedAt:null
+
+               })
+               .expect(200)
+               .expect((res)=>{
+                 expect(res.body.todo.text).toBe(text);
+                 expect(res.body.todo.completed).toBe(false);
+                 expect(res.body.todo.completedAt).toNotExist();
+
+               })
+               .end(done);
+
+
+
+
+    });
+
+
+
+
+
+
+
+});
