@@ -7,7 +7,7 @@ var bodyparser=require('body-parser');
 
 var {Todo}=require("./models/todo.js");
 
-var {users}=require('./models/user.js');
+var {User}=require('./models/user.js');
 
 const {ObjectID} =require('mongodb');
 
@@ -208,16 +208,31 @@ else{
 });
 
 
+app.post('/users',(req,res)=>{
+
+
+          var body=_.pick(req.body,['email','password']);
+          var user=new User(body);
+          user.save().then(()=>{
+
+             return  user.generateAuthToken();
 
 
 
+          }).then((token)=>{
+
+                res.header('x-auth',token).send(user);
 
 
 
+          }).catch((e)=>{
+
+       res.status(400).send(e);
+
+     })
 
 
-
-
+});
 
 
 
