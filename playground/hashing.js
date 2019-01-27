@@ -2,18 +2,42 @@ const {SHA256}=require('crypto-js');
 //
 const jwt=require('jsonwebtoken');
 
+const bcrypt=require('bcryptjs');
 
-var data={
+var password="123abc";
 
-  id:10
+// bcrypt.genSalt(10,(err,salt)=>{
+//
+//     bcrypt.hash(password,salt,(err,hash)=>{
+//
+//
+//         console.log(hash);
+//
+//     });
+//
+// });
 
-};
+var hashedPassword="$2a$10$dxMSEuUU5v74eSBzI5sOTO5Q58ACHZ2dZL52BZMVrU50OjDaf3o5G";
+bcrypt.compare('123abc',hashedPassword,(err,res)=>{
 
-var token =jwt.sign(data,"abc123");
-console.log('token', token);
 
-var decoded= jwt.verify(token,"abc123");
-console.log('decoded',decoded);
+   console.log(res);
+
+
+
+});
+
+// var data={
+//
+//   id:10
+//
+// };
+//
+// var token =jwt.sign(data,"abc123");
+// console.log('token', token);
+//
+// var decoded= jwt.verify(token,"abc123");
+// console.log('decoded',decoded);
 
 // var message="hello suhail";
 //
